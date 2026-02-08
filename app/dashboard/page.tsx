@@ -20,6 +20,8 @@ import { supabase } from "@/lib/supabase/client"
 import { Waves } from "@/components/Waves";
 import { ThemeQuickSwitcher } from "@/components/ThemeQuickSwitcher";
 
+export const dynamic = 'force-dynamic'
+
 export default function DashboardPage() {
     const [profile, setProfile] = useState<any>(null)
     const [loading, setLoading] = useState(true)

@@ -16,6 +16,8 @@ import { supabase } from "@/lib/supabase/client"
 import Link from "next/link"
 import { BackButton } from "@/components/ui/back-button"
 
+export const dynamic = 'force-dynamic'
+
 export default function LeaderboardPage() {
     const [players, setPlayers] = useState<any[]>([])
     const [loading, setLoading] = useState(true)

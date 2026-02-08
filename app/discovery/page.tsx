@@ -22,6 +22,8 @@ import { Waves } from "@/components/Waves";
 import { GenerateButton } from "@/components/GenerateButton";
 import { BackButton } from "@/components/ui/back-button"
 
+export const dynamic = 'force-dynamic'
+
 export default function DiscoveryPage() {
     const [step, setStep] = useState(1)
     const [loading, setLoading] = useState(false)
