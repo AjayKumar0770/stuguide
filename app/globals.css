@@ -1,26 +1,259 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--bg-color);
+  --color-foreground: var(--text-color);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--primary-color);
+  --color-input: var(--secondary-color);
+  --color-border: var(--secondary-color);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-accent-foreground: var(--text-color);
+  --color-accent: var(--accent-color);
+  --color-muted-foreground: var(--text-color);
+  --color-muted: var(--secondary-color);
+  --color-secondary-foreground: var(--text-color);
+  --color-secondary: var(--secondary-color);
+  --color-primary-foreground: var(--bg-color);
+  --color-primary: var(--primary-color);
+  --color-popover-foreground: var(--text-color);
+  --color-popover: var(--bg-color);
+  --color-card-foreground: var(--text-color);
+  --color-card: var(--secondary-color);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --animate-spotlight: spotlight 2s ease .75s 1 forwards;
+
+  @keyframes spotlight {
+    0% {
+      opacity: 0;
+      transform: translate(-72%, -62%) scale(0.5);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translate(-50%, -40%) scale(1);
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Base Variables */
+:root {
+  --radius: 0.625rem;
+
+  /* Initial default values (Shadow Army) */
+  --bg-color: #0D0D0D;
+  --primary-color: #663399;
+  --secondary-color: #2D1B4D;
+  --accent-color: #A855F7;
+  --text-color: #F3F4F6;
+
+  --sidebar: var(--bg-color);
+  --sidebar-foreground: var(--text-color);
+  --sidebar-primary: var(--primary-color);
+  --sidebar-primary-foreground: var(--bg-color);
+  --sidebar-accent: var(--secondary-color);
+  --sidebar-accent-foreground: var(--text-color);
+  --sidebar-border: var(--secondary-color);
+  --sidebar-ring: var(--primary-color);
+}
+
+/* Theme Overrides - Apply to root or any container */
+:root[data-theme="shadow-army"],
+[data-theme="shadow-army"] {
+  --bg-color: #0D0D0D;
+  --primary-color: #663399;
+  --secondary-color: #2D1B4D;
+  --accent-color: #A855F7;
+  --text-color: #F3F4F6;
+}
+
+:root[data-theme="architect"],
+[data-theme="architect"] {
+  --bg-color: #1A1B26;
+  --primary-color: #7197A8;
+  --secondary-color: #343B58;
+  --accent-color: #E0AF68;
+  --text-color: #C0CAF5;
+}
+
+:root[data-theme="red-gate"],
+[data-theme="red-gate"] {
+  --bg-color: #120A0A;
+  --primary-color: #991B1B;
+  --secondary-color: #450A0A;
+  --accent-color: #EF4444;
+  --text-color: #FEE2E2;
+}
+
+:root[data-theme="monarch-frost"],
+[data-theme="monarch-frost"] {
+  --bg-color: #0B1215;
+  --primary-color: #7DD3FC;
+  --secondary-color: #1E293B;
+  --accent-color: #0EA5E9;
+  --text-color: #F0F9FF;
+}
+
+:root[data-theme="national-hunter"],
+[data-theme="national-hunter"] {
+  --bg-color: #0F1115;
+  --primary-color: #D4AF37;
+  --secondary-color: #1F2937;
+  --accent-color: #FBBD23;
+  --text-color: #FFFFFF;
+}
+
+:root[data-theme="glitch"],
+[data-theme="glitch"] {
+  --bg-color: #FFFFFF;
+  --primary-color: #0077FF;
+  --secondary-color: #F3F4F6;
+  --accent-color: #00D4FF;
+  --text-color: #1F2937;
+}
+
+:root[data-theme="void"],
+[data-theme="void"] {
+  --bg-color: #000000;
+  --primary-color: #FFFFFF;
+  --secondary-color: #111111;
+  --accent-color: #3B82F6;
+  --text-color: #EDEDED;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .glass-morphism {
+    @apply backdrop-blur-xl bg-slate-950/40 border border-slate-800/50;
+  }
+
+  .text-glow-violet {
+    text-shadow: 0 0 10px rgba(139, 92, 246, 0.4);
+  }
+
+  .text-glow-cyan {
+    text-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #a855f7;
+  }
+}
+
+/* CUSTOM SCROLLBAR */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #020617;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* ANIMATIONS */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 40s linear infinite;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #FFF;
+  border-bottom-color: #a855f7;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }

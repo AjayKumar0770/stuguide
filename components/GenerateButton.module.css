@@ -1,0 +1,234 @@
+.btnWrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.btn {
+    --border-radius: 24px;
+    --padding: 4px;
+    --transition: 0.4s;
+    --button-color: var(--bg-color);
+    /* Matches dashboard background */
+    --highlight-color-hue: 270deg;
+    /* We'll keep this for the specific button effect, but could also link to primary-color if we extracted hue */
+
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.8em 2em;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.15rem;
+
+    background-color: var(--button-color);
+
+    box-shadow:
+        /* inset */
+        inset 0px 1px 1px rgba(255, 255, 255, 0.1),
+        inset 0px 2px 2px rgba(255, 255, 255, 0.05),
+        /* drop */
+        0px -1px 1px rgba(0, 0, 0, 0.02),
+        0px -2px 2px rgba(0, 0, 0, 0.03),
+        0px -4px 4px rgba(0, 0, 0, 0.05),
+        0px -8px 8px rgba(0, 0, 0, 0.06),
+        0px -16px 16px rgba(0, 0, 0, 0.08);
+
+    border: solid 1px rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    color: white;
+
+    transition:
+        box-shadow var(--transition),
+        border var(--transition),
+        background-color var(--transition),
+        transform 0.2s ease;
+}
+
+.btn:active:not(:disabled) {
+    transform: translateY(2px);
+}
+
+.btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.btn::before {
+    content: "";
+    position: absolute;
+    top: calc(0px - var(--padding));
+    left: calc(0px - var(--padding));
+    width: calc(100% + var(--padding) * 2);
+    height: calc(100% + var(--padding) * 2);
+    border-radius: calc(var(--border-radius) + var(--padding));
+    pointer-events: none;
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4));
+
+    z-index: -1;
+    transition:
+        box-shadow var(--transition),
+        filter var(--transition);
+    box-shadow:
+        0 -8px 8px -6px rgba(0, 0, 0, 0) inset,
+        0 -16px 16px -8px rgba(0, 0, 0, 0) inset,
+        1px 1px 1px rgba(255, 255, 255, 0.1),
+        2px 2px 2px rgba(255, 255, 255, 0.05),
+        -1px -1px 1px rgba(0, 0, 0, 0.1),
+        -2px -2px 2px rgba(0, 0, 0, 0.05);
+}
+
+.btn::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    pointer-events: none;
+    background-image: linear-gradient(0deg,
+            #fff,
+            hsl(var(--highlight-color-hue), 100%, 70%),
+            hsla(var(--highlight-color-hue), 100%, 70%, 50%),
+            8%,
+            transparent);
+    background-position: 0 0;
+    opacity: 0;
+    transition:
+        opacity var(--transition),
+        filter var(--transition);
+}
+
+.btnLetter {
+    position: relative;
+    display: inline-block;
+    color: rgba(255, 255, 255, 0.3);
+    animation: letter-anim 2s ease-in-out infinite;
+    transition:
+        color var(--transition),
+        text-shadow var(--transition),
+        opacity var(--transition);
+    font-style: italic;
+}
+
+@keyframes letter-anim {
+    50% {
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+        color: #fff;
+    }
+}
+
+.btnSvg {
+    height: 18px;
+    width: 18px;
+    margin-right: 0.75rem;
+    fill: var(--primary-color);
+    animation: flicker 2s linear infinite;
+    animation-delay: 0.5s;
+    filter: drop-shadow(0 0 5px var(--primary-color));
+    transition:
+        fill var(--transition),
+        filter var(--transition),
+        opacity var(--transition);
+}
+
+@keyframes flicker {
+    50% {
+        opacity: 0.4;
+    }
+}
+
+.txtWrapper {
+    position: relative;
+    display: grid;
+    grid-template-areas: "stack";
+    align-items: center;
+    justify-items: start;
+    margin-left: 0.5rem;
+}
+
+.txt1,
+.txt2 {
+    grid-area: stack;
+    white-space: nowrap;
+    display: flex;
+    gap: 2px;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.txt2 {
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+}
+
+.isLoading .txt1,
+.fadeOut {
+    opacity: 0 !important;
+    transform: translateY(-10px);
+    pointer-events: none;
+}
+
+.isLoading .txt2,
+.fadeIn {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    pointer-events: auto;
+}
+
+.isLoading .btnLetter {
+    animation:
+        focused-letter-anim 1s ease-in-out forwards,
+        letter-anim 1.2s ease-in-out infinite;
+    animation-delay: 0s, 1s;
+}
+
+@keyframes focused-letter-anim {
+
+    0%,
+    100% {
+        filter: blur(0px);
+    }
+
+    50% {
+        transform: scale(1.2);
+        filter: blur(2px) brightness(150%) drop-shadow(0 0 10px hsl(var(--highlight-color-hue), 100%, 70%));
+    }
+}
+
+.isLoading .btnSvg {
+    animation-duration: 0.8s;
+    fill: #fff;
+}
+
+.isLoading::before {
+    box-shadow:
+        0 -8px 12px -6px rgba(255, 255, 255, 0.1) inset,
+        0 -16px 16px -8px hsla(var(--highlight-color-hue), 100%, 70%, 20%) inset,
+        1px 1px 1px rgba(255, 255, 255, 0.1),
+        2px 2px 2px rgba(255, 255, 255, 0.05),
+        -1px -1px 1px rgba(0, 0, 0, 0.1),
+        -2px -2px 2px rgba(0, 0, 0, 0.05);
+}
+
+.btn:hover:not(:disabled) {
+    border: solid 1px hsla(var(--highlight-color-hue), 100%, 80%, 40%);
+}
+
+.btn:hover:not(:disabled)::before {
+    box-shadow:
+        0 -8px 8px -6px rgba(255, 255, 255, 0.2) inset,
+        0 -16px 16px -8px hsla(var(--highlight-color-hue), 100%, 70%, 30%) inset,
+        1px 1px 1px rgba(255, 255, 255, 0.1),
+        2px 2px 2px rgba(255, 255, 255, 0.05),
+        -1px -1px 1px rgba(0, 0, 0, 0.1),
+        -2px -2px 2px rgba(0, 0, 0, 0.05);
+}
+
+.btn:hover:not(:disabled)::after {
+    opacity: 0.1;
+}
