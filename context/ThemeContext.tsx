@@ -55,8 +55,12 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
 export const useTheme = () => {
     const context = useContext(ThemeContext)
+    // Return default values during SSR or before mount
     if (context === undefined) {
-        throw new Error("useTheme must be used within a ThemeProvider")
+        return {
+            theme: "shadow-army" as Theme,
+            setTheme: () => { }
+        }
     }
     return context
 }

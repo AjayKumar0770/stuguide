@@ -14,6 +14,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { BackButton } from "@/components/ui/back-button"
 import { useTheme, Theme } from "@/context/ThemeContext"
 
+export const dynamic = 'force-dynamic'
+
 const THEMES: { id: Theme; name: string; bg: string; primary: string }[] = [
     { id: "shadow-army", name: "Shadow Army", bg: "#0D0D0D", primary: "#663399" },
     { id: "architect", name: "Architect", bg: "#1A1B26", primary: "#7197A8" },
